@@ -54,7 +54,7 @@ body{
   gap: 32px;
   margin: 60px auto;
   padding: 10px;
-  flex-wrap: wrap; /* <-- KLUCZ: pozwala łamać wiersze */
+  flex-wrap: wrap;
 }
 
 .promo-row img {
@@ -80,21 +80,18 @@ body{
   100% { transform: translateY(0) perspective(1000px) translateZ(0); }
 }
 
-/* TABLET — 2 w linii */
 @media (max-width: 1100px) {
   .promo-row img {
     width: 300px;
   }
 }
 
-/* MAŁE TABLETY / DUŻE TELEFONY — 2 w linii */
 @media (max-width: 800px) {
   .promo-row img {
     width: 260px;
   }
 }
 
-/* TELEFONY — 1 w linii (pionowo) */
 @media (max-width: 600px) {
   .promo-row {
     flex-direction: column;
