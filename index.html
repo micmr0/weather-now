@@ -1,524 +1,799 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Weather Now – Fast & Accurate Weather App</title>
+  <title>Weather Now – Forecasts, Maps & Home Screen Widget</title>
 
-<meta name="description" content="Weather Now is a fast, accurate and beautiful weather app for Android. Real-time forecasts, air quality, hourly data and activity planning.">
-<meta name="keywords" content="weather app, android weather, forecast app, accurate weather, air quality app, mobile weather">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#020617">
-<link rel="canonical" href="https://micmr0.github.io/weather-now/">
+  <meta name="description" content="Weather forecast, weather maps, air quality, hourly charts, activity planner and a beautiful Android Home Screen Widget.">
+  <meta name="keywords" content="weather app, weather forecast, Android weather widget, hourly forecast, weather maps, air quality, activity planner, saved locations">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#020617">
+  <link rel="canonical" href="https://micmr0.github.io/weather-now/">
 
-<!-- Open Graph -->
-<meta property="og:title" content="Weather Now – Fast Weather Forecast App">
-<meta property="og:description" content="Beautiful, fast and accurate weather app with real-time forecasts and activity planner.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="screens/1.png">
+  <meta property="og:title" content="Weather Now – Everything You Need to Plan Your Day">
+  <meta property="og:description" content="Forecasts, weather maps, air quality, hourly charts, activity planning and a beautiful Home Screen Widget in one Android app.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://micmr0.github.io/weather-now/">
+  <meta property="og:image" content="screens/promo1.png">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Weather Now – Forecasts, Maps & Widget">
+  <meta name="twitter:description" content="A faster, smarter and more beautiful way to check the weather.">
+  <meta name="twitter:image" content="screens/promo1.png">
 
-<!-- Performance -->
-<link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
 
-<!-- Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Weather Now",
-  "applicationCategory": "WeatherApplication",
-  "operatingSystem": "Android",
-  "description": "Fast and accurate weather app with air quality, forecasts and planning tools.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Weather Now",
+    "applicationCategory": "WeatherApplication",
+    "operatingSystem": "Android",
+    "description": "Weather forecast, weather maps, air quality, hourly charts, activity planner and a Home Screen Widget.",
+    "url": "https://micmr0.github.io/weather-now/",
+    "downloadUrl": "https://play.google.com/store/apps/details?id=com.micmr0.weather",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Weather Now FREE",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    ]
   }
-}
-</script>
+  </script>
 
-<style>
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:linear-gradient(180deg,#020617,#0b1220);
-  color:white;
-}
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #081120;
+      --surface: rgba(255,255,255,0.055);
+      --border: rgba(255,255,255,0.09);
+      --text: #f8fafc;
+      --muted: #9fb2cf;
+      --primary: #60a5fa;
+      --cyan: #38bdf8;
+      --green: #22c55e;
+      --red: #ef4444;
+      --gold: #fbbf24;
+      --shadow: 0 24px 80px rgba(0,0,0,0.38);
+    }
 
-.app-logo{
-  margin-bottom:20px;
-}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-.app-logo img{
-  width:200px;
-  height:auto;
-  display:block;
-  margin:0 auto;
-  border-radius:32px; /* zaokrąglone rogi */
-  box-shadow:0 20px 60px rgba(31,74,36,0.20);
-}
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(37,99,235,0.16), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(8,145,178,0.12), transparent 32%),
+        linear-gradient(180deg, var(--bg), var(--bg-soft) 55%, var(--bg));
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-.promo-row {
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  margin: 60px auto;
-  padding: 10px;
-  flex-wrap: wrap;
-}
+    a { color: inherit; }
+    img { max-width: 100%; }
 
-.promo-row img {
-  width: 380px;
-  max-width: 90vw; /* responsywne na małych ekranach */
-  border-radius: 34px;
-  box-shadow: 0 30px 90px rgba(0,0,0,0.55);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  transform: perspective(1000px) translateZ(0);
-  animation: floaty 7s ease-in-out infinite;
-}
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
 
-/* Efekt 3D + glow */
-.promo-row img:hover {
-  transform: perspective(1000px) translateZ(55px) rotateX(5deg) rotateY(-5deg);
-  box-shadow: 0 45px 120px rgba(59,130,246,0.55);
-}
+    .section { padding: 88px 0; }
 
-/* Idle floating animation */
-@keyframes floaty {
-  0% { transform: translateY(0) perspective(1000px) translateZ(0); }
-  50% { transform: translateY(-8px) perspective(1000px) translateZ(20px); }
-  100% { transform: translateY(0) perspective(1000px) translateZ(0); }
-}
+    .section-heading {
+      max-width: 760px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
 
-@media (max-width: 1100px) {
-  .promo-row img {
-    width: 300px;
-  }
-}
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--cyan);
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
 
-@media (max-width: 800px) {
-  .promo-row img {
-    width: 260px;
-  }
-}
+    h1, h2, h3 {
+      line-height: 1.12;
+      margin-top: 0;
+    }
 
-@media (max-width: 600px) {
-  .promo-row {
-    flex-direction: column;
-    align-items: center;
-  }
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.8rem);
+      margin-bottom: 28px;
+      letter-spacing: -0.045em;
+    }
 
-  .promo-row img {
-    width: 85vw;
-  }
-}
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.45rem);
+      margin-bottom: 16px;
+      letter-spacing: -0.03em;
+    }
 
-/* HERO */
-.hero{
-  text-align:center;
-  padding:90px 20px 60px;
-  position:relative;
-  overflow:hidden;
-}
+    h3 { font-size: 1.2rem; }
+    p { color: var(--muted); }
 
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at top,#3b82f633,transparent 60%);
-  z-index:0;
-}
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 90px 0 90px;
+      text-align: center;
+    }
 
-.hero-content{
-  position:relative;
-  z-index:1;
-  max-width:1400px;
-  margin:auto;
-}
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -10% 0 auto;
+      height: 620px;
+      background: radial-gradient(circle at top, rgba(59,130,246,0.28), transparent 62%);
+      pointer-events: none;
+    }
 
-.hero h1{
-  font-size:3rem;
-  margin-bottom:10px;
-}
+    .hero-content { position: relative; z-index: 1; }
 
-.hero p{
-  opacity:0.75;
-}
+    .app-logo img {
+      width: 200px;
+      border-radius: 42px;
+      box-shadow: 0 30px 90px rgba(37,99,235,0.35);
+    }
 
-.hero img.main-shot{
-  width:260px;
-  margin:30px auto 20px;
-  border-radius:28px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.6);
-  display:block;
-}
+    .hero-copy { max-width: 860px; margin: 38px auto 0; }
 
-.store-btn{
-  display:inline-block;
-  margin:14px 0 20px;
-}
+    .hero-copy p {
+      max-width: 680px;
+      margin: 12px auto 0;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.8;
+    }
 
-.store-btn img{
-  width:220px;
-  transition:0.25s;
-}
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 42px;
+    }
 
-.store-btn img:hover{
-  transform:scale(1.05);
-  filter:drop-shadow(0 8px 20px rgba(59,130,246,0.5));
-}
+    .store-btn { display: inline-block; }
 
-/* VIDEO */
-.section{
-  max-width:1000px;
-  margin:60px auto;
-  padding:0 20px;
-  text-align:center;
-}
+    .store-btn img {
+      width: 220px;
+      display: block;
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
 
-.video iframe{
-  width:100%;
-  aspect-ratio:16/9;
-  border:none;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
-}
+    .store-btn:hover img {
+      transform: translateY(-3px) scale(1.03);
+      filter: drop-shadow(0 12px 28px rgba(59,130,246,0.45));
+    }
 
-/* SCREENS */
-.screens{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:18px;
-  padding:40px 20px;
-}
+    .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 0 24px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.055);
+      text-decoration: none;
+      font-weight: 750;
+      transition: 0.25s ease;
+    }
 
-.screens img{
-  width:200px;
-  border-radius:20px;
-  transition:0.25s;
-  box-shadow:0 10px 25px rgba(0,0,0,0.4);
-}
+    .secondary-btn:hover {
+      transform: translateY(-3px);
+      background: rgba(96,165,250,0.14);
+      border-color: rgba(96,165,250,0.45);
+    }
 
-.screens img:hover{
-  transform:translateY(-6px) scale(1.04);
-}
+    .trust-strip {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 38px;
+    }
 
-/* INFO */
-.info{
-  max-width:900px;
-  margin:60px auto;
-  padding:28px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.06);
-  border-radius:24px;
-  line-height:1.7;
-}
+    .trust-pill {
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: #dbeafe;
+      font-size: 0.9rem;
+    }
 
-.info .lead{
-  color:#38bdf8;
-  font-weight:600;
-}
+    .promo-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      align-items: start;
+      margin: 70px auto 0;
+    }
 
-/* COMPARISON */
-.comparison{
-  padding:60px 20px;
-  text-align:center;
-}
+    .promo-row img {
+      width: 100%;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
 
-.table{
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  flex-wrap:wrap;
-}
+    .promo-row img:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 35px 100px rgba(59,130,246,0.28);
+    }
 
-.col{
-  background:#141c2e;
-  padding:22px;
-  border-radius:20px;
-  width:280px;
-  border:1px solid rgba(255,255,255,0.06);
-}
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
 
-.plus{
-  border:2px solid #3b82f6;
-}
+    .feature-card {
+      padding: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.065), rgba(255,255,255,0.035));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 14px 45px rgba(0,0,0,0.2);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
 
-.row{
-  display:flex;
-  justify-content:space-between;
-  margin:8px 0;
-  border-bottom:1px solid #2a3550;
-  padding-bottom:6px;
-}
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(96,165,250,0.38);
+    }
 
-.yes{color:#22c55e}
-.no{color:#ef4444}
+    .feature-icon { font-size: 2rem; margin-bottom: 14px; }
+    .feature-card p { margin-bottom: 0; }
 
-/* FAQ */
-.faq{
-  max-width:900px;
-  margin:60px auto;
-  padding:0 20px;
-}
+    .showcase {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: center;
+    }
 
-details{
-  background:#141c2e;
-  margin:10px 0;
-  padding:16px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.06);
-  transition:0.25s;
-}
+    .showcase-copy ul {
+      list-style: none;
+      padding: 0;
+      margin: 26px 0 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
 
-details:hover{
-  background:#18233a;
-  transform:translateY(-2px);
-}
+    .showcase-copy li {
+      color: #dbeafe;
+      padding: 13px 15px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+    }
 
-summary{
-  cursor:pointer;
-  font-weight:bold;
-}
+    .showcase-visual {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
 
-details p{
-  margin-top:10px;
-  opacity:0.85;
-}
+    .showcase-visual img {
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
 
-/* SOCIALS */
-.socials{
-  max-width:900px;
-  margin:70px auto 40px;
-  padding:32px 20px;
-  text-align:center;
-  background:rgba(255,255,255,0.035);
-  border:1px solid rgba(255,255,255,0.06);
-  border-radius:24px;
-}
+    .video-card {
+      padding: 16px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
 
-.socials h2{
-  margin:0 0 8px;
-}
+    .video iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      border-radius: 18px;
+      display: block;
+    }
 
-.socials p{
-  margin:0 0 22px;
-  opacity:0.75;
-}
+    .screens {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+    }
 
-.social-links{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-}
+    .screens img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.35);
+      transition: transform 0.25s ease;
+    }
 
-.social-link{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:12px 18px;
-  border-radius:999px;
-  color:white;
-  text-decoration:none;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.08);
-  transition:0.25s;
-}
+    .screens img:hover { transform: translateY(-7px) scale(1.015); }
 
-.social-link:hover{
-  transform:translateY(-3px);
-  background:rgba(59,130,246,0.18);
-  box-shadow:0 10px 30px rgba(59,130,246,0.25);
-}
+    .cta {
+      text-align: center;
+      padding: 48px 28px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(56,189,248,0.2), transparent 55%),
+        linear-gradient(135deg, rgba(37,99,235,0.22), rgba(14,165,233,0.08));
+      border: 1px solid rgba(96,165,250,0.22);
+      box-shadow: var(--shadow);
+    }
 
-.social-icon{
-  font-size:1.1rem;
-}
+    .cta p { max-width: 700px; margin: 0 auto 24px; }
 
-.social-link svg{
-  flex-shrink:0;
-}
+    .faq { max-width: 900px; margin: 0 auto; }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:40px;
-  opacity:0.7;
-  border-top:1px solid rgba(255,255,255,0.06);
-}
-</style>
+    details {
+      background: rgba(255,255,255,0.05);
+      margin: 12px 0;
+      padding: 18px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      transition: 0.25s ease;
+    }
+
+    details:hover {
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-2px);
+    }
+
+    summary { cursor: pointer; font-weight: 800; }
+    details p { margin: 12px 0 0; }
+
+    .socials {
+      text-align: center;
+      padding: 34px 22px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      color: white;
+      text-decoration: none;
+      background: rgba(255,255,255,0.065);
+      border: 1px solid var(--border);
+      transition: 0.25s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px);
+      background: rgba(59,130,246,0.18);
+      box-shadow: 0 10px 30px rgba(59,130,246,0.22);
+    }
+
+    .comparison-wrap {
+      overflow-x: auto;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .comparison-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 17px 16px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .comparison-table th:first-child,
+    .comparison-table td:first-child {
+      text-align: left;
+      width: 46%;
+    }
+
+    .comparison-table thead th {
+      background: rgba(255,255,255,0.06);
+      font-size: 1rem;
+    }
+
+    .comparison-table thead th:nth-child(3) { color: #bfdbfe; }
+    .comparison-table thead th:nth-child(4) { color: #fde68a; }
+    .comparison-table tbody tr:hover { background: rgba(255,255,255,0.035); }
+
+    .yes { color: var(--green); font-weight: 900; }
+    .no { color: var(--red); font-weight: 900; }
+    .limit { color: #f8fafc; font-weight: 900; }
+
+    .plan-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .plan-card {
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+    }
+
+    .plan-card.plus { border-color: rgba(96,165,250,0.55); }
+    .plan-card.pro { border-color: rgba(251,191,36,0.55); }
+    .plan-card p { margin-bottom: 0; }
+
+    footer {
+      padding: 42px 20px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .footer-links a {
+      color: #dbeafe;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: white; }
+
+    @media (max-width: 980px) {
+      .promo-row,
+      .features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .promo-row img:last-child {
+        grid-column: 1 / -1;
+        max-width: 520px;
+        justify-self: center;
+      }
+
+      .showcase { grid-template-columns: 1fr; }
+      .screens { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 700px) {
+      .section { padding: 66px 0; }
+      .hero { padding-top: 52px; }
+
+      .promo-row,
+      .features-grid,
+      .plan-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .promo-row img:last-child { grid-column: auto; }
+      .showcase-copy ul,
+      .showcase-visual { grid-template-columns: 1fr; }
+      .screens { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-actions { flex-direction: column; }
+      .secondary-btn { width: 220px; }
+    }
+  </style>
 </head>
 
 <body>
+  <header class="hero">
+    <div class="container hero-content">
+      <div class="app-logo">
+        <img src="screens/logo.jpg" alt="Weather Now app logo">
+      </div>
 
-<section class="hero">
-  <div class="hero-content">
+      <div class="hero-copy">
+        <span class="eyebrow">Weather Now for Android</span>
+        <h1>Everything you need to plan your day.</h1>
+        <p>
+          Forecasts, weather maps, air quality, hourly charts, activity planning
+          and a beautiful Home Screen Widget — all in one modern weather app.
+        </p>
+      </div>
 
+      <div class="hero-actions">
+        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.micmr0.weather" target="_blank" rel="noopener noreferrer" aria-label="Download Weather Now from Google Play">
+          <img src="get_it.png" alt="Get it on Google Play">
+        </a>
+        <a class="secondary-btn" href="#features">Explore features</a>
+      </div>
 
-    <div class="app-logo">
-      <img src="screens/logo.jpg" alt="Weather Now Logo">
+      <div class="trust-strip" aria-label="Weather Now highlights">
+        <span class="trust-pill">Live weather</span>
+        <span class="trust-pill">Hourly forecast</span>
+        <span class="trust-pill">Weather maps</span>
+        <span class="trust-pill">Air quality</span>
+        <span class="trust-pill">Home Screen Widget</span>
+      </div>
+
+      <div class="promo-row">
+        <img src="screens/promo1.png" alt="Weather Now home screen widget">
+        <img src="screens/promo2.png" alt="Weather Now forecast and hourly charts">
+        <img src="screens/promo3.png" alt="Weather Now air quality and weather insights">
+      </div>
     </div>
+  </header>
 
-    <h1>Weather Now</h1>
-    <p>Fast. Accurate. Beautiful weather experience.</p>
+  <main>
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Why Weather Now</span>
+          <h2>Powerful weather tools without the clutter</h2>
+          <p>Everything is designed to help you understand the weather quickly, plan with confidence and get back to your day.</p>
+        </div>
 
-    <div class="promo-row">
-      <img src="screens/promo1.png" alt="Promo 1">
-      <img src="screens/promo2.png" alt="Promo 2">
-      <img src="screens/promo3.png" alt="Promo 3">
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon">🌤</div>
+            <h3>Accurate Weather</h3>
+            <p>Real-time conditions with detailed hourly and 3-day forecasts.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🗺</div>
+            <h3>Weather Maps</h3>
+            <p>Explore temperature, precipitation, wind and pressure layers.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🏠</div>
+            <h3>Home Screen Widget</h3>
+            <p>See current weather instantly without opening the app. Available in PRO.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🌬</div>
+            <h3>Air Quality & UV</h3>
+            <p>Understand air quality, key pollutants and UV conditions at a glance.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🏃</div>
+            <h3>Activity Planner</h3>
+            <p>Find the best time to walk, run or cycle using real weather conditions.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Fast & Beautiful</h3>
+            <p>A clean, modern experience with smart caching and quick loading.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container showcase">
+        <div class="showcase-copy">
+          <span class="eyebrow">One clear experience</span>
+          <h2>Everything important, exactly where you expect it</h2>
+          <p>
+            Weather Now was created for people who want useful information instantly.
+            No unnecessary screens. No complicated navigation. Just the weather tools
+            you need in one focused experience.
+          </p>
+
+          <ul>
+            <li>✔ Current weather</li>
+            <li>✔ Hourly forecast</li>
+            <li>✔ 3-day forecast</li>
+            <li>✔ Hourly charts</li>
+            <li>✔ Weather maps</li>
+            <li>✔ Air quality</li>
+            <li>✔ UV index</li>
+            <li>✔ Moon information</li>
+            <li>✔ Activity planner</li>
+            <li>✔ Weather facts</li>
+            <li>✔ Saved locations</li>
+            <li>✔ Home Screen Widget</li>
+          </ul>
+        </div>
+
+        <div class="showcase-visual">
+          <img src="screens/1.png" alt="Weather Now current weather dashboard">
+          <img src="screens/2.png" alt="Weather Now detailed hourly forecast">
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">See it in action</span>
+          <h2>A smarter way to understand the weather</h2>
+          <p>Explore the main experience, hourly charts, activity planning and environmental insights in a single app.</p>
+        </div>
+
+        <div class="video-card video">
+          <iframe src="https://www.youtube-nocookie.com/embed/JrmIBVHBmpQ?rel=0" title="Weather Now app demo" loading="lazy" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Designed for daily use</span>
+          <h2>Clear forecasts. Useful details. Better decisions.</h2>
+          <p>From a quick morning check to planning outdoor activities, Weather Now keeps the most important information easy to reach.</p>
+        </div>
+
+        <div class="screens">
+          <img src="screens/1.png" alt="Current weather dashboard">
+          <img src="screens/2.png" alt="Hourly weather forecast">
+          <img src="screens/3.png" alt="Air quality and weather insights">
+          <img src="screens/4.png" alt="Weather maps">
+          <img src="screens/5.png" alt="Outdoor activity planner">
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta">
+          <span class="eyebrow">Ready to experience weather differently?</span>
+          <h2>Plan smarter. Check faster. Stay one step ahead.</h2>
+          <p>Download Weather Now and discover a faster, smarter and more beautiful way to check the weather every day.</p>
+          <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.micmr0.weather" target="_blank" rel="noopener noreferrer" aria-label="Download Weather Now from Google Play">
+            <img src="get_it.png" alt="Get it on Google Play">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container faq">
+        <div class="section-heading">
+          <span class="eyebrow">FAQ</span>
+          <h2>Everything you need to know</h2>
+        </div>
+
+        <details>
+          <summary>Is Weather Now free?</summary>
+          <p>Yes. Weather Now FREE includes the essential weather information you need every day, including current conditions, hourly forecasts, air quality and activity planning.</p>
+        </details>
+
+        <details>
+          <summary>What is included in Weather Now PLUS?</summary>
+          <p>PLUS removes ads and unlocks weather maps, hourly precipitation and wind charts, plus up to 2 saved locations.</p>
+        </details>
+
+        <details>
+          <summary>What is included in Weather Now PRO?</summary>
+          <p>PRO includes everything in PLUS, adds the Home Screen Weather Widget and increases the saved-location limit to 5.</p>
+        </details>
+
+        <details>
+          <summary>Does Weather Now work worldwide?</summary>
+          <p>Yes. You can search for weather in cities and locations around the world and quickly return to your current position whenever you need it.</p>
+        </details>
+
+        <details>
+          <summary>Can I restore my subscription?</summary>
+          <p>Yes. Sign in with the same Google account used for the purchase and Weather Now will check your active Google Play subscription.</p>
+        </details>
+
+        <details>
+          <summary>Does the app work offline?</summary>
+          <p>Previously loaded weather data remains available from the local cache when the network is temporarily unavailable.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="socials">
+          <span class="eyebrow">WeatherPulse</span>
+          <h2>Discover more about the sky around you</h2>
+          <p>Daily weather facts, sky phenomena and atmospheric insights.</p>
+
+          <div class="social-links">
+            <a class="social-link" href="https://www.youtube.com/@weatherpulseofficial" target="_blank" rel="noopener noreferrer" aria-label="WeatherPulse on YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="22" height="22" aria-hidden="true">
+                <path d="M23.498 6.186a2.97 2.97 0 0 0-2.09-2.102C19.555 3.5 12 3.5 12 3.5s-7.555 0-9.408.584A2.97 2.97 0 0 0 .502 6.186 31.12 31.12 0 0 0 0 12a31.12 31.12 0 0 0 .502 5.814 2.97 2.97 0 0 0 2.09 2.102C4.445 20.5 12 20.5 12 20.5s7.555 0 9.408-.584a2.97 2.97 0 0 0 2.09-2.102A31.12 31.12 0 0 0 24 12a31.12 31.12 0 0 0-.502-5.814zM9.75 15.568V8.432L15.818 12 9.75 15.568z"/>
+              </svg>
+              <span>YouTube Shorts</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="plans">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Compare plans</span>
+          <h2>Choose the Weather Now experience that fits you</h2>
+          <p>Start free, unlock advanced weather tools with PLUS, or get the complete experience with PRO.</p>
+        </div>
+
+        <div class="comparison-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>FREE</th>
+                <th>PLUS</th>
+                <th>PRO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Current weather</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Hourly forecast</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>3-day forecast</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Air quality & UV</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Activity planner</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Weather facts & moon information</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Hourly temperature chart</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Hourly precipitation chart</td><td class="no">✖</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Hourly wind chart</td><td class="no">✖</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Ads</td><td>Included</td><td class="yes">No ads</td><td class="yes">No ads</td></tr>
+              <tr><td>Weather maps</td><td class="no">✖</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+              <tr><td>Saved locations</td><td class="no">✖</td><td class="limit">2</td><td class="limit">5</td></tr>
+              <tr><td>Home Screen Weather Widget</td><td class="no">✖</td><td class="no">✖</td><td class="yes">✔</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="plan-summary">
+          <article class="plan-card">
+            <h3>Weather Now FREE</h3>
+            <p>Everything you need for accurate everyday weather forecasts.</p>
+          </article>
+
+          <article class="plan-card plus">
+            <h3>Weather Now PLUS</h3>
+            <p>Advanced charts, weather maps, no ads and up to 2 saved locations.</p>
+          </article>
+
+          <article class="plan-card pro">
+            <h3>Weather Now PRO</h3>
+            <p>The complete experience with the Home Screen Widget and up to 5 saved locations.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="https://play.google.com/store/apps/details?id=com.micmr0.weather" target="_blank" rel="noopener noreferrer">Google Play</a>
+      <a href="https://micm93.wixsite.com/weather" target="_blank" aria-label="Privacy Policy">Privacy Policy</a>
+      <a href="mailto:mic93mm@gmail.com">Contact</a>
     </div>
-
-
-    <a class="store-btn"
-       href="https://play.google.com/store/apps/details?id=com.micmr0.weather"
-       target="_blank"
-       rel="noopener noreferrer">
-      <img src="get_it.png" alt="Get it on Google Play">
-    </a>
-
-  </div>
-</section>
-
-<section class="section">
-  <h2>See it in action</h2>
-  <div class="video">
-    <iframe
-      src="https://www.youtube-nocookie.com/embed/JrmIBVHBmpQ?rel=0"
-      title="Weather Now demo"
-      loading="lazy">
-    </iframe>
-  </div>
-</section>
-
-<section class="screens">
-  <img src="screens/1.png" alt="Weather dashboard">
-  <img src="screens/2.png" alt="Hourly forecast">
-  <img src="screens/3.png" alt="Air quality view">
-  <img src="screens/4.png" alt="Weather map">
-  <img src="screens/5.png" alt="Activity planner">
-</section>
-
-<section class="info">
-  <h2>App Info</h2>
-
-  <p class="lead">🌦 Weather Now – fast, beautiful and precise weather at a glance.</p>
-
-  <p>
-    Weather Now is a modern weather application designed for speed, clarity and accuracy.
-    Everything is presented in a clean interface without unnecessary complexity.
-  </p>
-
-  <p>✔ Real-time weather for any location</p>
-  <p>✔ Hourly & daily forecasts</p>
-  <p>✔ Air quality & environmental data</p>
-  <p>✔ Activity planning (run, walk, cycle)</p>
-
-  <p class="lead">
-    Weather data should be instant, clear and reliable 🌍
-  </p>
-</section>
-
-<section class="comparison">
-<h2>Free vs PLUS</h2>
-<div class="table">
-
-<div class="col">
-<h3>Free</h3>
-
-<div class="row"><span>Current forecast</span><span class="yes">✔</span></div>
-<div class="row"><span>Hourly temperature</span><span class="yes">✔</span></div>
-<div class="row"><span>Daily forecast</span><span class="yes">✔</span></div>
-<div class="row"><span>Air quality</span><span class="yes">✔</span></div>
-<div class="row"><span>Activity planner</span><span class="yes">✔</span></div>
-<div class="row"><span>Moon info</span><span class="yes">✔</span></div>
-
-<div class="row"><span>Hourly precipitation</span><span class="no">✖</span></div>
-<div class="row"><span>Hourly wind</span><span class="no">✖</span></div>
-<div class="row"><span>Weather maps</span><span class="no">✖</span></div>
-<div class="row"><span>Latest features</span><span class="no">✖</span></div>
-
-</div>
-
-<div class="col plus">
-<h3>PLUS ⭐</h3>
-
-<div class="row"><span>Current forecast</span><span class="yes">✔</span></div>
-<div class="row"><span>Hourly temperature</span><span class="yes">✔</span></div>
-<div class="row"><span>Daily forecast</span><span class="yes">✔</span></div>
-<div class="row"><span>Air quality</span><span class="yes">✔</span></div>
-<div class="row"><span>Activity planner</span><span class="yes">✔</span></div>
-<div class="row"><span>Moon info</span><span class="yes">✔</span></div>
-
-<div class="row"><span>Hourly precipitation</span><span class="yes">✔</span></div>
-<div class="row"><span>Hourly wind</span><span class="yes">✔</span></div>
-<div class="row"><span>Weather maps</span><span class="yes">✔</span></div>
-<div class="row"><span>Latest features</span><span class="yes">✔</span></div>
-
-</div>
-
-</div>
-</section>
-
-<section class="faq">
-  <h2>FAQ</h2>
-
-  <details>
-    <summary>How to unlock PLUS?</summary>
-    <p>Leave a review and request a promo code in the app.</p>
-  </details>
-
-  <details>
-    <summary>Google login benefits?</summary>
-    <p>Subscription is saved and restored on new devices.</p>
-  </details>
-
-  <details>
-    <summary>Is data real-time?</summary>
-    <p>Yes, weather data is updated continuously from live sources.</p>
-  </details>
-
-  <details>
-    <summary>Subscription issues?</summary>
-    <p>Clear app data in system settings and try again.</p>
-  </details>
-
-</section>
-
-<section class="socials">
-  <h2>Follow WeatherPulse</h2>
-  <p>Daily weather facts, sky phenomena and atmospheric insights.</p>
-
-  <div class="social-links">
-
-    <a class="social-link"
-       href="https://www.youtube.com/@weatherpulseofficial"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="WeatherPulse on YouTube">
-
-      <svg xmlns="http://www.w3.org/2000/svg"
-           viewBox="0 0 24 24"
-           fill="white"
-           width="22"
-           height="22">
-        <path d="M23.498 6.186a2.97 2.97 0 0 0-2.09-2.102C19.555 3.5 12 3.5 12 3.5s-7.555 0-9.408.584A2.97 2.97 0 0 0 .502 6.186 31.12 31.12 0 0 0 0 12a31.12 31.12 0 0 0 .502 5.814 2.97 2.97 0 0 0 2.09 2.102C4.445 20.5 12 20.5 12 20.5s7.555 0 9.408-.584a2.97 2.97 0 0 0 2.09-2.102A31.12 31.12 0 0 0 24 12a31.12 31.12 0 0 0-.502-5.814zM9.75 15.568V8.432L15.818 12 9.75 15.568z"/>
-      </svg>
-
-      <span>YouTube Shorts</span>
-    </a>
-
-  </div>
-</section>
-
-<footer>
-  <p>© 2026 Weather Now • micmr0</p>
-</footer>
-
+    <p>© 2026 Weather Now • micmr0</p>
+  </footer>
 </body>
 </html>
